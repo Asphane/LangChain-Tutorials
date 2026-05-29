@@ -29,6 +29,14 @@ A basic CLI-based interactive chatbot script utilizing LangChain's message struc
 - Maintains and passes chat history in memory for context-aware conversations.
 - **To run:** `python chatbot.py`
 
+### `msg_placeholder.py`
+A script demonstrating the use of `MessagesPlaceholder` to dynamically inject previous conversation history into a prompt template.
+- Demonstrates loading existing chat history from an external text file (`chat_history.txt`).
+- **To run:** `python msg_placeholder.py`
+
+### `chat_history.txt`
+A text file storing simulated chat history (e.g., previous `HumanMessage` and `AIMessage` objects) to test the dynamic loading of context in `msg_placeholder.py`.
+
 ---
 
 ## 🚀 Getting Started
