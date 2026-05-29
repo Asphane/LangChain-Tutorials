@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="https://raw.githubusercontent.com/hwchase17/langchain/master/docs/static/img/langchain_logo.png" alt="LangChain Logo" width="200"/>
+  <img src="https://github.com/langchain-ai.png" alt="LangChain Logo" width="150"/>
   <h1>🦜🔗 LangChain Tutorials</h1>
   <p><i>A practical, hands-on repository for exploring Large Language Models, Embeddings, and AI tools using LangChain.</i></p>
 
