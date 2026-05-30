@@ -22,21 +22,41 @@ A comprehensive, hands-on practice script demonstrating the utilization of Pytho
   - `Review`: Extracting key themes, summary, pros, cons, and sentiments from text review comments.
 - **Interview revision sheet**: Synthesized cheat sheet summarizing rules, optional keys (`NotRequired`, `total=False`), `Annotated` descriptions, and `Literal` restrictions.
 
+### `pydantic_practice.py`
+A complete, hands-on practice script demonstrating the utilization of Pydantic (`BaseModel`) for runtime data validation, type conversion, and advanced constraint enforcement.
+- **BaseModel & Serialization**: Creating models, parsing, and exporting to dicts (`model_dump()`) or JSON (`model_dump_json()`).
+- **Data Types & Validation**: Type conversion, default values, optional fields, and handling validation errors.
+- **Field Constraints (`Field`)**: Specifying metadata, default factories, and value constraints (e.g., `gt`, `ge`, `lt`, `le`).
+- **Complex Structures**: Nested Pydantic models and models within lists.
+- **Field Validators (`@field_validator`)**: Writing simple validators, cleaners (stripping/case adjustments), and schema checks (like emails).
+- **LangChain Structured Output Modeling**:
+  - `ResumeAnalysis`: Schema modeling candidates with structured fields and nested collections.
+  - `ProductReview` & `SentimentAnalysis`: Sentiment parsing with confidence levels.
+  - `Review`: Advanced rating and summary schema mapping.
+- **Interview revision sheet**: Cheat sheet summarizing BaseModel usage, validation helpers, and comparison between TypedDict (static) and Pydantic (runtime).
+
 ---
 
 ## 🚀 Getting Started
 
-To run the `TypedDict` practice file, ensure you have Python 3.8+ installed (or activate your virtual environment) and execute:
+To run either of the practice files, ensure you have Python 3.8+ and Pydantic installed (or activate your virtual environment) and execute:
 
 ```bash
+# To run TypedDict examples
 python Outputs/typedict_practice.py
+
+# To run Pydantic examples
+python Outputs/pydantic_practice.py
 ```
 
 ---
 
-## 💡 Why use TypedDict in LangChain?
+## 💡 Why use TypedDict & Pydantic in LangChain?
 
-1. **Structured Outputs**: Helps map incoming JSON outputs from LLMs directly into structured Python objects with static analysis support using `model.with_structured_output(SchemaName)`.
+1. **Structured Outputs**: Helps map incoming JSON outputs from LLMs directly into structured Python objects with static analysis and runtime validation support using `model.with_structured_output(SchemaName)`.
 2. **State Management**: Commonly used in LangGraph to define the input, output, and internal state of agent workflows.
 3. **API Integration**: Simplifies validation of parameters sent to and received from external service APIs.
-4. **Annotated Metadata**: Enables embedding field descriptions using `Annotated[Type, "description"]` that LLMs leverage as prompt instructions during structured extraction.
+4. **Annotated Metadata / Descriptions**: Enables embedding field descriptions using `Annotated[Type, "description"]` (in TypedDict) or `Field(description="description")` (in Pydantic) that LLMs leverage as prompt instructions during structured extraction.
+5. **TypedDict vs Pydantic**:
+   - **TypedDict**: Static typing only (no runtime validation overhead). Best for lightweight schemas and defining simple dictionaries or LangGraph state models where runtime enforcement isn't needed.
+   - **Pydantic**: Robust runtime data validation, automatic type conversion, and advanced constraint checks. Highly recommended for production-grade LangChain apps, LLM output parser targets, and FastAPI integrations.
