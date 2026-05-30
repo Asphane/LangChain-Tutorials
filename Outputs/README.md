@@ -16,6 +16,11 @@ A comprehensive, hands-on practice script demonstrating the utilization of Pytho
   - Weather API responses with optional rainfall metrics.
   - GitHub User Profile data.
   - E-commerce Product representations with discount variables.
+- **LangChain Structured Output Schemas**:
+  - `ResumeAnalysis`: Schema for extracting candidate information (skills, experience, email, recommendation) using Annotated types.
+  - `ProductReview` & `MovieReview`: Rating, sentiment, and reviewer extraction patterns.
+  - `Review`: Extracting key themes, summary, pros, cons, and sentiments from text review comments.
+- **Interview revision sheet**: Synthesized cheat sheet summarizing rules, optional keys (`NotRequired`, `total=False`), `Annotated` descriptions, and `Literal` restrictions.
 
 ---
 
@@ -31,6 +36,7 @@ python Outputs/typedict_practice.py
 
 ## 💡 Why use TypedDict in LangChain?
 
-1. **Structured Outputs**: Helps map incoming JSON outputs from LLMs directly into structured Python objects with static analysis support.
+1. **Structured Outputs**: Helps map incoming JSON outputs from LLMs directly into structured Python objects with static analysis support using `model.with_structured_output(SchemaName)`.
 2. **State Management**: Commonly used in LangGraph to define the input, output, and internal state of agent workflows.
 3. **API Integration**: Simplifies validation of parameters sent to and received from external service APIs.
+4. **Annotated Metadata**: Enables embedding field descriptions using `Annotated[Type, "description"]` that LLMs leverage as prompt instructions during structured extraction.
