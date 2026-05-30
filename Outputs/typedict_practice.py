@@ -263,6 +263,248 @@ print()
 # # 10. KEY TAKEAWAYS
 # # ============================================================
 
+# ============================================================
+# 11. LANGCHAIN STRUCTURED OUTPUT SCHEMAS
+# ============================================================
+
+from typing import TypedDict, Annotated, NotRequired, Literal
+
+
+class ResumeAnalysis(TypedDict):
+    """
+    Schema for extracting information from resumes.
+    Useful with:
+        model.with_structured_output(ResumeAnalysis)
+    """
+
+    candidate_name: Annotated[
+        str,
+        "Full name of the candidate"
+    ]
+
+    skills: Annotated[
+        list[str],
+        "List all technical and non-technical skills mentioned in the resume"
+    ]
+
+    years_of_experience: Annotated[
+        int,
+        "Total years of professional experience"
+    ]
+
+    email: Annotated[
+        NotRequired[str],
+        "Candidate email address if available"
+    ]
+
+    recommendation: Annotated[
+        Literal["hire", "reject"],
+        "Final hiring recommendation"
+    ]
+
+
+sample_resume_output: ResumeAnalysis = {
+    "candidate_name": "Bisakh Patra",
+    "skills": [
+        "Python",
+        "LangChain",
+        "Machine Learning",
+        "Docker"
+    ],
+    "years_of_experience": 2,
+    "recommendation": "hire"
+}
+
+print("Resume Analysis:")
+print(sample_resume_output)
+print()
+
+
+# ============================================================
+# 12. PRODUCT REVIEW ANALYZER
+# ============================================================
+
+class ProductReview(TypedDict):
+
+    product_name: Annotated[
+        str,
+        "Name of the reviewed product"
+    ]
+
+    rating: Annotated[
+        int,
+        "Rating between 1 and 5"
+    ]
+
+    sentiment: Annotated[
+        Literal["positive", "negative"],
+        "Overall sentiment of the review"
+    ]
+
+    reviewer: Annotated[
+        NotRequired[str],
+        "Name of reviewer if available"
+    ]
+
+
+sample_review: ProductReview = {
+    "product_name": "Samsung Galaxy S24 Ultra",
+    "rating": 5,
+    "sentiment": "positive",
+    "reviewer": "Nitish Singh"
+}
+
+print("Product Review:")
+print(sample_review)
+print()
+
+
+# ============================================================
+# 13. MOVIE REVIEW ANALYZER
+# ============================================================
+
+class MovieReview(TypedDict):
+
+    title: Annotated[
+        str,
+        "Movie title"
+    ]
+
+    rating: Annotated[
+        int,
+        "Rating from 1 to 10"
+    ]
+
+    sentiment: Annotated[
+        Literal["positive", "negative"],
+        "Overall movie sentiment"
+    ]
+
+    reviewer: Annotated[
+        NotRequired[str],
+        "Reviewer name"
+    ]
+
+
+movie_review: MovieReview = {
+    "title": "Interstellar",
+    "rating": 9,
+    "sentiment": "positive",
+    "reviewer": "Bisakh"
+}
+
+print("Movie Review:")
+print(movie_review)
+print()
+
+
+# ============================================================
+# 14. LANGCHAIN REVIEW EXTRACTION
+# ============================================================
+
+class Review(TypedDict):
+
+    key_themes: Annotated[
+        list[str],
+        "All key themes discussed in the review"
+    ]
+
+    summary: Annotated[
+        str,
+        "Brief summary of the review"
+    ]
+
+    sentiment: Annotated[
+        Literal["positive", "negative", "neutral"],
+        "Overall sentiment"
+    ]
+
+    pros: Annotated[
+        NotRequired[list[str]],
+        "Advantages mentioned in review"
+    ]
+
+    cons: Annotated[
+        NotRequired[list[str]],
+        "Disadvantages mentioned in review"
+    ]
+
+    name: Annotated[
+        NotRequired[str],
+        "Reviewer name"
+    ]
+
+
+sample_extraction: Review = {
+    "key_themes": [
+        "Camera",
+        "Battery",
+        "Performance"
+    ],
+    "summary": "Excellent flagship phone with strong performance.",
+    "sentiment": "positive",
+    "pros": [
+        "Great camera",
+        "Long battery life"
+    ],
+    "name": "Nitish Singh"
+}
+
+print("Structured Review:")
+print(sample_extraction)
+print()
+
+
+# ============================================================
+# 15. COMMON INTERVIEW NOTES
+# ============================================================
+
+"""
+TypedDict Interview Revision
+
+1. TypedDict creates type-safe dictionaries.
+
+2. Annotated[T, description]
+   -> Type = T
+   -> Description used by LangChain/LLMs
+
+3. Optional[str]
+   -> Key required
+   -> Value can be str or None
+
+4. NotRequired[str]
+   -> Key may be absent
+
+5. Literal["a", "b"]
+   -> Restricts allowed values
+
+6. total=False
+   -> Makes ALL keys optional
+
+7. TypedDict supports:
+   - Nesting
+   - Inheritance
+   - Lists
+   - Optional fields
+   - Structured LLM outputs
+
+8. Common LangChain Usage:
+
+   structured_model =
+       model.with_structured_output(MySchema)
+
+9. Most common use cases:
+   - Resume Extraction
+   - Review Analysis
+   - Invoice Extraction
+   - User Profiles
+   - API Responses
+   - Agent Outputs
+
+10. TypedDict is for static typing.
+    At runtime, it behaves like a normal dict.
+"""
+
 # """
 # 1. TypedDict creates type-safe dictionaries.
 # 2. All fields are required by default.
