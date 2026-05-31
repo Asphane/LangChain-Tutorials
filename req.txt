@@ -29,3 +29,5 @@ streamlit
 
 #structured output
 pydantic
+langchain-classic
+grandalf
