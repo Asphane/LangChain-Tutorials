@@ -1,5 +1,9 @@
+"""
+This file is a comprehensive practice notebook for LangChain.
+It covers everything from basic model calls to complex LCEL chains and RAG simulations.
+Each section demonstrates a different LangChain concept with clear examples.
+"""
 # LangChain Chains Complete Notes & Practice File
-
 """
 LANGCHAIN CHAINS COMPLETE PRACTICE FILE
 

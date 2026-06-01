@@ -1,9 +1,14 @@
+"""
+This script demonstrates how to force the model to output data in a very specific format
+using Pydantic. Pydantic ensures the output matches a strict data structure (like a Python class).
+"""
 from langchain_huggingface import ChatHuggingFace, HuggingFaceEndpoint
 from dotenv import load_dotenv
 from langchain_core.prompts import PromptTemplate
 from langchain_core.output_parsers import PydanticOutputParser
 from pydantic import BaseModel, Field
 
+# Load API keys
 load_dotenv()
 
 llm = HuggingFaceEndpoint(
@@ -13,14 +18,17 @@ llm = HuggingFaceEndpoint(
 
 model=ChatHuggingFace(llm=llm)
 
+# Define the exact data structure we want using a Pydantic BaseModel
+# We want a Person with a name (string), age (integer > 18), and city (string)
 class Person(BaseModel):
     name: str=Field(description="Name of the person")
     age: int=Field(gt=18, description="Age of the person")
     city: str=Field(description="City where the person lives")
 
-
+# Create a parser based on our Person class
 parser=PydanticOutputParser(pydantic_object=Person)
 
+# Create a prompt that includes the formatting instructions from our parser
 template=PromptTemplate(
     template="generate the name, age, city of a fictional {place} person. \n {format_instructions}",
     input_variables=['place'],

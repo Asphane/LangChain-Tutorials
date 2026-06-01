@@ -1,3 +1,8 @@
+"""
+This script demonstrates how to run multiple tasks in parallel using RunnableParallel.
+It generates a report and quiz questions at the same time using two different models,
+and then merges their outputs into a final document.
+"""
 from langchain_huggingface import ChatHuggingFace, HuggingFaceEndpoint
 from langchain_google_genai import GoogleGenerativeAI
 from dotenv import load_dotenv
@@ -6,6 +11,7 @@ from langchain_core.output_parsers import StrOutputParser
 from langchain_core.runnables import RunnableParallel
 import grandalf
 
+# Load API keys
 load_dotenv()
 
 model1=ChatHuggingFace(llm=HuggingFaceEndpoint(repo_id="Qwen/Qwen2.5-72B-Instruct",
@@ -15,6 +21,7 @@ model2=GoogleGenerativeAI(model="gemini-2.5-flash")
 
 parser=StrOutputParser()
 
+# Define prompts for the three separate tasks
 prompt1=PromptTemplate(
     template='write a detailed report on {text}.\n',
     input_variables=['text']
@@ -30,13 +37,16 @@ prompt3=PromptTemplate(
     input_variables=['report', 'questions']
 )
 
+# Create a parallel chain that runs prompt1 (report) and prompt2 (quiz) at the exact same time
 parallel_chain=RunnableParallel(
     report=prompt1 | model1 | parser,
     questions=prompt2 | model2 | parser
 )
 
+# This chain will take the combined output from the parallel_chain and merge it
 merged_chain=prompt3 | model1 | parser
 
+# Connect the parallel step to the merging step
 chain=parallel_chain | merged_chain
 
 txt = """Support vector machines (SVMs) are a set of supervised learning methods used for classification, regression and outliers detection.
@@ -61,8 +71,10 @@ The support
  vector machines in scikit-learn support both dense (numpy.ndarray and convertible to that by numpy.asarray) and sparse (any scipy.sparse) sample vectors as input. However, to use an SVM to make predictions for sparse data, it must have been fit on such data. For optimal performance, use C-ordered numpy.ndarray (dense) or scipy.sparse.csr_matrix (sparse) with dtype=float64.
 """
 
+# Execute the entire workflow
 result=chain.invoke({'text': txt})
 
 print(result)
 
+# Print a visual representation of how the data flows through the chain
 chain.get_graph().print_ascii()
