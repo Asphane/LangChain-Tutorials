@@ -2,6 +2,7 @@
 langchain
 langchain-core
 langchain-community
+langchain-experimental
 
 # OpenAI Integration
 langchain-openai
@@ -31,3 +32,6 @@ streamlit
 pydantic
 langchain-classic
 grandalf
+
+#docloader
+pypdf
