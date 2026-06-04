@@ -35,3 +35,8 @@ grandalf
 
 #docloader
 pypdf
+
+#tools
+duckduckgo-search 
+langchain_experimental
+ddgs
